@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.center.platform.dao.IExpertDao" >
+  <resultMap id="BaseResultMap" type="Expert" >
+    <id column="EXPERTID" property="expertid" jdbcType="VARCHAR" />
+    <result column="EXPERTNAME" property="expertname" jdbcType="VARCHAR" />
+    <result column="PROFESSION" property="profession" jdbcType="VARCHAR" />
+    <result column="DEPART" property="depart" jdbcType="VARCHAR" />
+    <result column="ROLEVALUE" property="rolevalue" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    EXPERTID, EXPERTNAME, PROFESSION, DEPART, ROLEVALUE
+  </sql>
+  <select id="find" resultMap="BaseResultMap" parameterType="Expert">
+    select
+    <include refid="Base_Column_List"/>
+    from T_EXPERT where 1=1
+    <if test="expertid != null">
+      and expertid=#{expertid,jdbcType=VARCHAR}
+    </if>
+    <if test="expertname != null">
+      and expertname=#{expertname,jdbcType=VARCHAR}
+    </if>
+    <if test="profession != null">
+      and profession =#{profession,jdbcType=VARCHAR}
+    </if>
+    <if test="depart != null">
+      and depart=#{depart,jdbcType=VARCHAR}
+    </if>
+    <if test="rolevalue != null">
+      and rolevalue = #{rolevalue,jdbcType=VARCHAR}
+    </if>
+    <if test="null!=conditions">
+      <foreach collection="conditions" item="condition" >
+        and ${condition}
+      </foreach>
+    </if>
+  </select>
+
+  <delete id="delete" parameterType="String">
+    delete from T_EXPERT
+    where EXPERTID = #{expertid,jdbcType=VARCHAR}
+  </delete>
+
+
+  <insert id="save" parameterType="Expert">
+    insert into T_EXPERT(
+    <if test="expertid != null">
+      EXPERTID,
+    </if>
+    <if test="expertname != null">
+      EXPERTNAME,
+    </if>
+    <if test="profession != null">
+      PROFESSION,
+    </if>
+    <if test="depart != null">
+      DEPART,
+    </if>
+    <if test="rolevalue != null">
+      ROLEVALUE
+    </if>
+    )VALUES (
+    <if test="expertid != null">
+      #{expertid,jdbcType=VARCHAR},
+    </if>
+    <if test="expertname != null">
+      #{expertname,jdbcType=VARCHAR},
+    </if>
+    <if test="profession != null">
+      #{profession,jdbcType=VARCHAR},
+    </if>
+    <if test="depart != null">
+      #{depart,jdbcType=VARCHAR},
+    </if>
+    <if test="rolevalue != null">
+      #{rolevalue,jdbcType=VARCHAR}
+    </if>)
+  </insert>
+
+
+  <update id="update" parameterType="Expert">
+    update T_EXPERT
+    <set>
+      <if test="expertname != null">
+        EXPERTNAME = #{expertname,jdbcType=VARCHAR},
+      </if>
+      <if test="profession != null">
+        PROFESSION = #{profession,jdbcType=VARCHAR},
+      </if>
+      <if test="depart != null">
+        DEPART = #{depart,jdbcType=VARCHAR},
+      </if>
+      <if test="rolevalue != null">
+        ROLEVALUE = #{rolevalue,jdbcType=VARCHAR}
+      </if>
+    </set>
+    where EXPERTID = #{expertid,jdbcType=VARCHAR}
+  </update>
+</mapper>

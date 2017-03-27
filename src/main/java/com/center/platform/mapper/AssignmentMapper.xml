@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.center.platform.dao.IAssignmentDao" >
+  <resultMap id="BaseResultMap" type="com.center.platform.entity.Assignment" >
+    <id column="ASSIGNMENTID" property="assignmentId" jdbcType="VARCHAR" />
+    <result column="ASSIGNMENTSTEP" property="assignmentStep" jdbcType="VARCHAR" />
+    <result column="ASSIGNMENTNAME" property="assignmentName" jdbcType="VARCHAR" />
+    <result column="PROJECTID" property="projectId" jdbcType="VARCHAR" />
+    <result column="USERID" property="userId" jdbcType="VARCHAR" />
+    <result column="ASSIGNMENTDETAILSTEP" property="assignmentDetailStep" jdbcType="VARCHAR" />
+    <result column="ASSIGNMENTLOCK" property="assignmentLock" jdbcType="VARCHAR" />
+    <result column="CREATETIME" property="createtime" jdbcType="DATE" javaType="java.sql.Date"/>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ASSIGNMENTID, ASSIGNMENTSTEP, ASSIGNMENTNAME, PROJECTID, USERID, ASSIGNMENTDETAILSTEP, 
+    ASSIGNMENTLOCK, CREATETIME
+  </sql>
+  <select id="find" resultMap="BaseResultMap" parameterType="Assignment">
+    select 
+    <include refid="Base_Column_List" />
+    from T_ASSIGNMENT
+    where 1=1
+    <if test="assignmentId!= null">
+      and ASSIGNMENTID = #{assignmentId,jdbcType=VARCHAR}
+    </if>
+    <if test="assignmentStep!= null">
+      and ASSIGNMENTSTEP = #{assignmentStep,jdbcType=VARCHAR}
+    </if>
+    <if test="projectId!= null">
+      and PROJECTID = #{projectId,jdbcType=VARCHAR}
+    </if>
+    <if test="assignmentName!= null">
+      and ASSIGNMENTNAME = #{assignmentName,jdbcType=VARCHAR}
+    </if>
+    <if test="userId!= null">
+      and USERID = #{userId,jdbcType=VARCHAR}
+    </if>
+    <if test="null!=conditions">
+      <foreach collection="conditions" item="condition" >
+        and ${condition}
+      </foreach>
+    </if>
+    ORDER BY createtime DESC
+  </select>
+  <delete id="delete" parameterType="java.lang.Object" >
+    delete from T_ASSIGNMENT
+    where ASSIGNMENTID = #{assignmentId,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="save" parameterType="Assignment" >
+    insert into T_ASSIGNMENT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="assignmentId != null" >
+        ASSIGNMENTID,
+      </if>
+      <if test="assignmentStep != null" >
+        ASSIGNMENTSTEP,
+      </if>
+      <if test="assignmentName != null" >
+        ASSIGNMENTNAME,
+      </if>
+      <if test="projectId != null" >
+        PROJECTID,
+      </if>
+      <if test="userId != null" >
+        USERID,
+      </if>
+      <if test="assignmentDetailStep != null" >
+        ASSIGNMENTDETAILSTEP,
+      </if>
+      <if test="assignmentLock != null" >
+        ASSIGNMENTLOCK,
+      </if>
+      <if test="createtime != null" >
+        CREATETIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="assignmentId != null" >
+        #{assignmentId,jdbcType=VARCHAR},
+      </if>
+      <if test="assignmentStep != null" >
+        #{assignmentStep,jdbcType=VARCHAR},
+      </if>
+      <if test="assignmentName != null" >
+        #{assignmentName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectId != null" >
+        #{projectId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="assignmentDetailStep != null" >
+        #{assignmentDetailStep,jdbcType=VARCHAR},
+      </if>
+      <if test="assignmentLock != null" >
+        #{assignmentLock,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=DATE}
+      </if>
+    </trim>
+  </insert>
+  <update id="update" parameterType="Assignment" >
+    update T_ASSIGNMENT
+    <set >
+      <if test="assignmentStep != null" >
+        ASSIGNMENTSTEP = #{assignmentStep,jdbcType=VARCHAR},
+      </if>
+      <if test="assignmentName != null" >
+        ASSIGNMENTNAME = #{assignmentName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectId != null" >
+        PROJECTID = #{projectId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        USERID = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="assignmentDetailStep != null" >
+        ASSIGNMENTDETAILSTEP = #{assignmentDetailStep,jdbcType=VARCHAR},
+      </if>
+      <if test="assignmentLock != null" >
+        ASSIGNMENTLOCK = #{assignmentLock,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        CREATETIME = #{createtime,jdbcType=DATE},
+      </if>
+    </set>
+    where ASSIGNMENTID = #{assignmentId,jdbcType=VARCHAR}
+  </update>
+
+</mapper>

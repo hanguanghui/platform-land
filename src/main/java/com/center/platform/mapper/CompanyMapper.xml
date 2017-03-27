@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.center.platform.dao.ICompanyDao" >
+  <resultMap id="BaseResultMap" type="Company" >
+    <id column="COMPANYID" property="companyid" jdbcType="VARCHAR" />
+    <result column="COMPANYNAME" property="companyname" jdbcType="VARCHAR" />
+    <result column="ROLEVALUE" property="rolevalue" jdbcType="VARCHAR" />
+    <result column="COMPANYTYPE" property="companytype" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    COMPANYID, COMPANYNAME, ROLEVALUE, COMPANYTYPE
+  </sql>
+
+  <select id="find" parameterType="Company"  resultMap="BaseResultMap">
+    select * from t_company
+    where 1=1
+    <if test="null != companyid">
+      and companyid = #{companyid,jdbcType = VARCHAR}
+    </if>
+    <if test="null != companyname">
+      and companyname = #{companyname,jdbcType = VARCHAR}
+    </if>
+    <if test="null != rolevalue">
+      and rolevalue = #{rolevalue,jdbcType = VARCHAR}
+    </if>
+    <if test="null != companytype">
+      and companytype = #{companytype,jdbcType = VARCHAR}
+    </if>
+    <if test="null!=conditions">
+      <foreach collection="conditions" item="condition" >
+        and ${condition}
+      </foreach>
+    </if>
+  </select>
+
+  <insert id="save" parameterType="Company">
+    insert into T_COMPANY (
+    <if test="companyid != null">COMPANYID,
+    </if>
+    <if test="companyname != null">COMPANYNAME,
+    </if>
+    <if test ="rolevalue != null">ROLEVALUE,
+    </if>
+    <if test="companytype != null">COMPANYTYPE
+    </if>
+    )VALUES (
+    <if test="companyid != null">
+      #{companyid,jdbcType=VARCHAR},
+    </if>
+    <if test="companyname != null">
+      #{companyname,jdbcType=VARCHAR},
+    </if>
+    <if test="rolevalue != null">
+      #{rolevalue,jdbcType=VARCHAR},
+    </if>
+    <if test="companytype != null">
+      #{companytype,jdbcType=VARCHAR}
+    </if>
+    )
+  </insert>
+
+
+  <update id="update" parameterType="Company">
+    update T_COMPANY
+    set COMPANYNAME = #{record.companyname,jdbcType=VARCHAR},
+    ROLEVALUE = #{record.rolevalue,jdbcType=VARCHAR},
+    COMPANYTYPE = #{record.companytype,jdbcType=VARCHAR}
+    where COMPANYID = #{record.companyid,jdbcType=VARCHAR}
+  </update>
+
+  <delete id="delete" parameterType="String">
+    DELETE * from t_compamy where companyid=#{companyid,jdbcType=VARCHAR}
+  </delete>
+</mapper>

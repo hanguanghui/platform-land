@@ -1,0 +1,594 @@
+<#include '../common.ftl'/>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="<@s.url '/thirdparty/layui/css/layui.css'/>" media="all"/>
+    <link rel="stylesheet" href="<@s.url '/css/public/global.css'/>"/>
+    <link rel="stylesheet" href="<@s.url '/css/apply.css'/>" media="all"/>
+    <link rel="stylesheet" href="<@s.url '/thirdparty/font-awesome/css/font-awesome.min.css'/>" media="all"/>
+
+    <script src="<@s.url'/thirdparty/bootstrap/js/bootstrap-v3.js'/>" type="text/javascript"></script>
+    <script src="<@s.url'/thirdparty/jquery/jquery.ajaxfileupload.js'/>" type="text/javascript"></script>
+</head>
+
+<body>
+<div style="margin: 15px;">
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>项目申请</legend>
+    </fieldset>
+    <form class="layui-form" action="<@s.url '/project/draft/submit'/>" method="post">
+    <#if proid??>
+        <input type="hidden" value="${proid!}" name="proid" id="proid">
+        <input type="hidden" value="${dkid!}" name="dkid" id="dkid">
+    </#if>
+        <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+            <ul class="layui-tab-title">
+                <li class="layui-this">项目类型</li>
+                <li>项目基本信息</li>
+                <li>项目投资信息</li>
+                <li>项目建设规模</li>
+                <li>编制单位</li>
+                <li>初审专家</li>
+                <li>图形模块</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <div class="pro-type">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">项目类型:</label>
+
+                            <div class="layui-input-block">
+                                <select name="protype" lay-filter="protype" lay-verify="required">
+                                    <option value="" selected=""></option>
+                                    <option value="高标准基本农田">高标准基本农田</option>
+                                    <option value="一般基本农田保护项目">一般基本农田保护项目</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <#--基本信息开始-->
+                <div class="layui-tab-item">
+                    <div class="pro-type">
+                        <div class="form-line">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">项目名称</label>
+
+                                <div class="layui-input-block">
+                                    <input type="text" name="proname" lay-verify="proname" autocomplete="off"
+                                           placeholder="请输入项目名称" class="layui-input" value="1" lay-verify="required">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">下达机关</label>
+
+                                <div class="layui-input-block">
+                                    <input type="text" name="probudgetorgan" lay-verify="probudgetorgan"
+                                           autocomplete="off" placeholder="请输入下达预算与计划机关" class="layui-input" value="1"
+                                           lay-verify="required">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">下达文件名</label>
+
+                                <div class="layui-input-block">
+                                    <input type="text" name="probudgetorname" lay-verify="probudgetorname"
+                                           autocomplete="off" placeholder="请输入下达预算与计划文件名" class="layui-input" value="1"
+                                           lay-verify="required">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">建设期</label>
+
+                                <div class="layui-input-block">
+                                    <input type="number" name="probuildtime" lay-verify="probuildtime"
+                                           autocomplete="off" class="layui-input" placeholder="请输入建设期" value="1"
+                                           lay-verify="required">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-line">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">所在地</label>
+
+                                <div class="layui-input-block">
+                                    <input type="text" name="prolocation" lay-verify="prolocation" autocomplete="off"
+                                           placeholder="请输入所在地" class="layui-input" value="1" lay-verify="required">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">下达文件号</label>
+
+                                <div class="layui-input-block">
+                                    <input type="text" name="probudgetnumber" lay-verify="probudgetnumber"
+                                           autocomplete="off" placeholder="请输入下达预算与计划文件号" class="layui-input" value="1"
+                                           lay-verify="required">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">批复日期</label>
+
+                                <div class="layui-input-block">
+                                    <input type="text" name="proreplytime" id="date" lay-verify="date"
+                                           placeholder="批复日期" autocomplete="off" class="layui-input"
+                                           onclick="layui.laydate({elem: this})" lay-verify="required">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">灾毁项目</label>
+
+                                <div class="layui-input-block">
+                                    <select lay-filter="proisdamage" name="proisdamage" lay-verify="required">
+                                        <option value="" selected=""></option>
+                                        <option value="是">是</option>
+                                        <option value="否">否</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <#--基本信息结束-->
+            <#--项目投资信息开始-->
+                <div class="layui-tab-item">
+                    <div class="pro-type">
+                        <div class="form-line">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">项目总投资</label>
+
+                                <div class="layui-input-block">
+                                    <input type="number" name="prototalinvest" lay-verify="prototalinvest"
+                                           autocomplete="off" placeholder="请输入总投资" class="layui-input" value="1"
+                                           lay-verify="required">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">中央资金</label>
+
+                                <div class="layui-input-block">
+                                    <input type="number" name="procenternewinvest" lay-verify="procenternewinvest"
+                                           autocomplete="off" placeholder="请输入中央分配的新增资金" class="layui-input" value="1"
+                                           lay-verify="required">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">耕地开垦费</label>
+
+                                <div class="layui-input-block">
+                                    <input type="number" name="procultivatedlandreclamation"
+                                           lay-verify="procultivatedlandreclamation" autocomplete="off"
+                                           placeholder="请输入耕地开垦费" class="layui-input" value="1" lay-verify="required">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">土地出让费</label>
+
+                                <div class="layui-input-block">
+                                    <input type="number" name="proagrilandsell" lay-verify="proagrilandsell"
+                                           autocomplete="off" placeholder="请输入用于农业土地开发的土地出让费" class="layui-input"
+                                           value="1" lay-verify="required">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">投资人投资</label>
+
+                                <div class="layui-input-block">
+                                    <input type="number" name="prolandobligorinvest" lay-verify="prolandobligorinvest"
+                                           autocomplete="off" placeholder="请输入土地复垦义务投资人投资" class="layui-input"
+                                           value="1" lay-verify="required">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-line">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">地方资金</label>
+
+                                <div class="layui-input-block">
+                                    <input type="number" name="prolocalinvest" lay-verify="prolocalinvest"
+                                           autocomplete="off" placeholder="请输入地方资金" class="layui-input" value="1"
+                                           lay-verify="required">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">地方资金</label>
+
+                                <div class="layui-input-block">
+                                    <input type="number" name="prolocalnewinvest" lay-verify="prolocalnewinvest"
+                                           autocomplete="off" placeholder="请输入地方留成新增资金" class="layui-input" value="1"
+                                           lay-verify="required">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">补充资金</label>
+
+                                <div class="layui-input-block">
+                                    <input type="number" name="prosupplementinvest" lay-verify="prosupplementinvest"
+                                           autocomplete="off" placeholder="请输入自行补充耕地资金" class="layui-input" value="1"
+                                           lay-verify="required">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">土地复垦费</label>
+
+                                <div class="layui-input-block">
+                                    <input type="number" name="prolandcontinuously" lay-verify="prolandcontinuously"
+                                           autocomplete="off" placeholder="请输入土地复垦费" class="layui-input" value="1"
+                                           lay-verify="required">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">其他资金</label>
+
+                                <div class="layui-input-block">
+                                    <input type="number" name="prootherinvest" lay-verify="prootherinvest"
+                                           autocomplete="off" placeholder="请输入其他资金" class="layui-input" value="1"
+                                           lay-verify="required">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <#--项目投资信息结束-->
+            <#--项目规模开始-->
+                <div class="layui-tab-item">
+                    <div class="pro-type">
+                        <div class="form-line">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">建设总规模</label>
+
+                                <div class="layui-input-block">
+                                    <input type="number" name="prototalscale" lay-verify="prototalscale"
+                                           autocomplete="off" placeholder="请输入建设总规模" class="layui-input" value="1"
+                                           lay-verify="required">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">农田规模</label>
+
+                                <div class="layui-input-block">
+                                    <input type="number" name="probasefarmscale" lay-verify="probasefarmscale"
+                                           autocomplete="off" placeholder="请输入基本农田整理规模" class="layui-input" value="1"
+                                           lay-verify="required">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">开发规模</label>
+
+                                <div class="layui-input-block">
+                                    <input type="number" name="prodevelopscale" lay-verify="prodevelopscale"
+                                           autocomplete="off" placeholder="请输入开发规模" class="layui-input" value="1"
+                                           lay-verify="required">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">建设条件</label>
+
+                                <div class="layui-input-block">
+                                    <input type="number" name="prohblandconscondition"
+                                           lay-verify="prohblandconscondition" autocomplete="off"
+                                           placeholder="请输入高标准基本农田建设条件" class="layui-input" value="1"
+                                           lay-verify="required">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">灾毁面积</label>
+
+                                <div class="layui-input-block">
+                                    <input type="number" name="prodamagearea" lay-verify="prodamagearea"
+                                           autocomplete="off" placeholder="请输入灾毁耕地面积" class="layui-input" value="1"
+                                           lay-verify="required">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-line">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">整理规模</label>
+
+                                <div class="layui-input-block">
+                                    <input type="number" name="protidyscale" lay-verify="protidyscale"
+                                           autocomplete="off" placeholder="请输入整理规模" class="layui-input" value="1"
+                                           lay-verify="required">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">复垦规模</label>
+
+                                <div class="layui-input-block">
+                                    <input type="number" name="proreclamationscale" lay-verify="proreclamationscale"
+                                           autocomplete="off" placeholder="请输入复垦规模" class="layui-input" value="1"
+                                           lay-verify="required">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">计划建规模</label>
+
+                                <div class="layui-input-block">
+                                    <input type="number" name="proplanchblscale" lay-verify="proplanchblscale"
+                                           autocomplete="off" placeholder="请输入计划建成高标准基本农田规模" class="layui-input"
+                                           value="1" lay-verify="required">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">新增面积</label>
+
+                                <div class="layui-input-block">
+                                    <input type="number" name="pronewlandscale" lay-verify="pronewlandscale"
+                                           autocomplete="off" placeholder="请输入新增耕地面积" class="layui-input" value="1"
+                                           lay-verify="required">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">占补平衡</label>
+
+                                <div class="layui-input-block">
+                                    <input type="number" name="probalancearea" lay-verify="probalancearea"
+                                           autocomplete="off" placeholder="请输入计划可用于占补平衡面积" class="layui-input"
+                                           value="1" lay-verify="required">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <#--项目规模结束-->
+                <!--编制单位-->
+                <div class="layui-tab-item">
+                    <div class="pro-type">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">编制单位</label>
+
+                            <div class="layui-input-block">
+                                <input type="text" name="companyname" lay-verify="bcompany" autocomplete="off"
+                                       id="bCompany" placeholder="请输入bzdw" class="layui-input" value="1"
+                                       lay-verify="required">
+                                <input type="hidden" name="companyid" lay-verify="bcompany" autocomplete="off"
+                                       id="bCompanyid" class="layui-input" value="" lay-verify="required">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!---->
+                <!--专家-->
+                <div class="layui-tab-item">
+                    <div class="pro-type">
+                        <table class="site-table table-hover">
+                            <thead>
+                            <tr>
+                                <th>姓名</th>
+                                <th>职称</th>
+                                <th>工作单位</th>
+                                <th>
+                                    <button class="fa fa-plus-circle  btn btn-info" id="expertAdd"
+                                            style="font-size: 18px;color:#1E9FFF" type="button"></button>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody id="exportView">
+                            <tr>
+                                <input type="hidden" id="expertid" name="expertid" >
+                                <td><input type="text" id="expertName" name="expertname" data-id="" lay-verify="required"
+                                           placeholder="请输入" autocomplete="off" class="layui-input input-expert"
+                                           lay-verify="required"></td>
+                                <td><input type="text" id="expertPro" name="profession" lay-verify="required"
+                                           placeholder="请输入" autocomplete="off" class="layui-input"
+                                           lay-verify="required"></td>
+                                <td><input type="text" id="expertDepart" name="depart" lay-verify="required"
+                                           placeholder="请输入" autocomplete="off" class="layui-input"
+                                           lay-verify="required"></td>
+                                <td></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!---->
+                <#--图形-->
+                <div class="layui-tab-item">
+                    <div class="pro-type1">
+                        <table class="site-table table-hover shape-info">
+                            <thead>
+                                <tr>
+                                    <th>多边形号</th>
+                                    <th>环号</th>
+                                    <th>点序号</th>
+                                    <th>x</th>
+                                    <th>Y</th>
+                                    <th>长度</th>
+                                </tr>
+                            </thead>
+                            <tbody id="shape-detail">
+
+                            </tbody>
+                        </table>
+                        <div class="shape-imp-area">
+                            <div class="form-line">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">文件类型</label>
+                                    <div class="layui-input-block">
+                                        <select lay-filter="" name="" id="ShapeType" lay-verify="required">
+                                            <option value="" selected=""></option>
+                                            <option value="zip">shape文件压缩包(*.zip)</option>
+                                            <option value="dwg">CAD文件(*.dwg)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-line">
+                                <div class="form-line-cus">
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <#--<a href="javascript:void(0);" class="layui-btn layui-btn-mini file" id="uploadArea">
+                                                <i class="fa fa-file">&nbsp;</i>
+                                                选择文件
+                                                <input type="file" name="file" class="file-input upload" data-id="uploadShape" id="uploadShape" accept=".zip,.ZIP,.DWG,.dwg"/>
+                                            </a>-->
+                                                <a href="javascript:void(0);" class="layui-btn layui-btn-mini file" id="uploadArea"><i class="fa fa-file">&nbsp;</i>选择文件
+                                                    <input type="file" name="file" class="file-input upload" data-id="uploadShape"  id="uploadShape" accept="">
+                                                </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-line-cus">
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <input type="button" id="shapeUpload" class="layui-btn layui-btn-mini upload-shape"  value="图形上传"  lay-verify="required">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="sum-area">
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" type="submit">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="<@s.url'/thirdparty/layui/layui.js'/>" type="text/javascript"></script>
+<script src="<@s.url'/js/draft.js'/>" type="text/javascript"></script>
+<script id="companyLstTpl" type="text/html">
+    <div clas="pub_company" id="companyList">
+        <div class="layui-field-box">
+            <table class="sitenone-table table-hover">
+                <tbody>
+                <tr>
+                    <td><label class="layui-form-label-1">输入：</label></td>
+                    <td><input type="text" name="inpbc" lay-verify="inpbc" autocomplete="off" id="inpbc"
+                               placeholder="请输入bzdw" class="layui-input" value="1" lay-verify="required"></td>
+                    <td>
+                        <button class="layui-btn layui-btn-small" type="button" id="btnCompanyCommit">确定</button>
+                    </td>
+                </tr>
+                {{# layui.each(d, function(index, item){ }}
+                <tr>
+                    <td style="font-weight:700">{{ item.key }}:</td>
+                    <td>
+                        {{# layui.each(item.value, function(ind, it){ }}
+                        <a href="javascript:void(0)" class="layui-btn layui-btn-mini company-sel-btn" data-id="{{it.companyid}}" data-companyname="{{ it.companyname}}">{{ it.companyname}}</a>
+                        {{# }); }}
+                    </td>
+                </tr>
+                {{# }); }}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</script>
+
+<script id="expertTpl" type="text/html">
+    <div clas="pub_company" id="companyList">
+        <div class="layui-field-box">
+            <table class="sitenone-table table-hover">
+                <thead>
+                <tr>
+                    <th>姓名</th>
+                    <th>职称</th>
+                    <th>部门</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><input type="text" id="inputName" lay-verify="required"
+                               placeholder="请输入" autocomplete="off" class="layui-input"
+                               lay-verify="required"></td>
+                    <td><input type="text" id="inputPro" lay-verify="required"
+                               placeholder="请输入" autocomplete="off" class="layui-input"
+                               lay-verify="required"></td>
+                    <td><input type="text" id="inputDepart" lay-verify="required"
+                               placeholder="请输入" autocomplete="off" class="layui-input"
+                               lay-verify="required"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <button class="layui-btn layui-btn-small" style="float:right" type="button"
+                                id="btnExpertCommit">确定
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="layui-tab layui-tab-brief">
+                <ul class="layui-tab-title">
+                    <li class="layui-this">姓氏</li>
+                    <li>部门</li>
+                </ul>
+                <div class="layui-tab-content">
+                    <div class="layui-tab-item layui-show">
+                        <table class="sitenone-table table-hover">
+                            <tbody>
+                            {{# layui.each(d.name, function(index, item){ }}
+                            <tr>
+                                <td style="font-weight:700">{{ item.key }}:</td>
+                                <td>
+                                    {{# layui.each(item.value, function(ind, it){ }}
+                                    <a href="javascript:void(0)" class="layui-btn layui-btn-mini expert-sel-btn" data-id="{{it.expertid}}" data-profession="{{it.profession}}"
+                                       data-depart="{{it.depart}}" data-name="{{ it.expertname}}">{{ it.expertname}}</a>
+                                    {{# }); }}
+                                </td>
+                            </tr>
+                            {{# }); }}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="layui-tab-item">
+                        <table class="sitenone-table table-hover">
+                            <tbody>
+                            {{# layui.each(d.depart, function(index, item){ }}
+                            <tr>
+                                <td style="font-weight:700">{{ item.key }}:</td>
+                                <td>
+                                    {{# layui.each(item.value, function(ind, it){ }}
+                                    <a href="javascript:void(0)" class="layui-btn layui-btn-mini expert-sel-btn" data-id="{{it.expertid}}" data-profession="{{it.profession}}"
+                                       data-depart="{{it.depart}}" data-name="{{ it.expertname}}">{{ it.expertname}}</a>
+                                    {{# }); }}
+                                </td>
+                            </tr>
+                            {{# }); }}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+</body>
+
+</html>

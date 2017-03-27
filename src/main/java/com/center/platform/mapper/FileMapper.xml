@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.center.platform.dao.IFileDao" >
+  <resultMap id="BaseResultMap" type="Material" >
+    <id column="FILEID" property="fileid" jdbcType="VARCHAR" />
+    <result column="PATH" property="path" jdbcType="VARCHAR" />
+    <result column="CREATETIME" property="createtime"  jdbcType="DATE" javaType="java.sql.Date"/>
+    <result column="PROID" property="proid" jdbcType="VARCHAR" />
+    <result column="FILESIZE" property="filesize" jdbcType="VARCHAR" />
+    <result column="PDFPATH" property="pdfpath" jdbcType="VARCHAR" />
+    <result column="FILENAME" property="filename" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    FILEID, PATH, CREATETIME, PROID, FILESIZE, PDFPATH,FILENAME
+  </sql>
+  <select id="find" resultMap="BaseResultMap" parameterType="Material" >
+    select
+    <include refid="Base_Column_List" />
+    from T_FILE
+    where 1=1
+    <if test="null!=fileid">
+      and fileid=#{fileid,jdbcType=VARCHAR}
+    </if>
+    <if test="null!= proid">
+      and PROID =#{proid,jdbcType=VARCHAR}
+    </if>
+  </select>
+  <delete id="delete" parameterType="String" >
+    delete from T_FILE
+    where FILEID = #{fileid,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="save" parameterType="Material" >
+    insert into T_FILE (FILEID, PATH, CREATETIME,
+    PROID, FILESIZE, PDFPATH,FILENAME
+    )
+    values (#{fileid,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR}, #{createtime,jdbcType=DATE},
+    #{proid,jdbcType=VARCHAR}, #{filesize,jdbcType=DECIMAL}, #{pdfpath,jdbcType=VARCHAR},#{filename,jdbcType=VARCHAR}
+    )
+  </insert>
+  <update id="update" parameterType="Material" >
+    update T_FILE
+    <set >
+      <if test="path != null" >
+        PATH = #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        CREATETIME = #{createtime,jdbcType=DATE},
+      </if>
+      <if test="proid != null" >
+        PROID = #{proid,jdbcType=VARCHAR},
+      </if>
+      <if test="filesize != null" >
+        FILESIZE = #{filesize,jdbcType=DECIMAL},
+      </if>
+      <if test="pdfpath != null" >
+        PDFPATH = #{pdfpath,jdbcType=VARCHAR},
+      </if>
+      <if test="filename != null" >
+        FILENAME = #{filename,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where FILEID = #{fileid,jdbcType=VARCHAR}
+  </update>
+</mapper>

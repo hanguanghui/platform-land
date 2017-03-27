@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.center.platform.dao.ILogDao" >
+  <resultMap id="BaseResultMap" type="Log" >
+    <result column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="PATH" property="path" jdbcType="VARCHAR" />
+    <result column="SERVERPATH" property="serverpath" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+    <result column="THUMB" property="thumb" jdbcType="VARCHAR" />
+    <result column="CREATETIME" property="createtime" jdbcType="DATE" javaType="java.sql.Date" />
+    <result column="ORDERNUMBER" property="ordernumber" jdbcType="VARCHAR" />
+    <result column="PROID" property="proid" jdbcType="VARCHAR" />
+    <result column="LOCALPATH" property="localpath" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    ID, NAME, PATH, SERVERPATH, TYPE, THUMB, CREATETIME, ORDERNUMBER, PROID,LOCALPATH
+  </sql>
+  <select id="find" resultMap="BaseResultMap" parameterType="Log" >
+    select
+    <include refid="Base_Column_List" />
+    from T_LOG
+    where 1=1
+    <if test="proid != null">
+       and PROID = #{proid,jdbcType=VARCHAR}
+    </if>
+    <if test="id != null">
+       and ID = #{id,jdbcType=VARCHAR}
+    </if>
+    <if test="type != null">
+      and TYPE = #{type,jdbcType=VARCHAR}
+    </if>
+    <if test="null!=conditions">
+      <foreach collection="conditions" item="condition" >
+        and ${condition}
+      </foreach>
+    </if>
+    ORDER BY  CREATETIME DESC
+  </select>
+
+  <select id="findYears" resultType="String" parameterType="Log" >
+    select distinct(TO_CHAR(createtime,'YYYY')) from t_log
+    where 1=1
+    <if test="proid != null">
+      and PROID = #{proid,jdbcType=VARCHAR}
+    </if>
+  </select>
+
+  <insert id="insert" parameterType="Log" >
+    insert into T_LOG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="path != null" >
+        PATH,
+      </if>
+      <if test="serverpath != null" >
+        SERVERPATH,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+      <if test="thumb != null" >
+        THUMB,
+      </if>
+      <if test="createtime != null" >
+        CREATETIME,
+      </if>
+      <if test="ordernumber != null" >
+        ORDERNUMBER,
+      </if>
+      <if test="proid != null" >
+        PROID,
+      </if>
+      <if test="localpath != null" >
+        LOCALPATH
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="path != null" >
+        #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="serverpath != null" >
+        #{serverpath,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="thumb != null" >
+        #{thumb,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ordernumber != null" >
+        #{ordernumber,jdbcType=VARCHAR},
+      </if>
+      <if test="proid != null" >
+        #{proid,jdbcType=VARCHAR},
+      </if>
+      <if test="localpath != null" >
+        #{localpath,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <delete id="delete" parameterType="String">
+    delete from T_LOG where id=#{id,jdbcType = VARCHAR}
+  </delete>
+</mapper>

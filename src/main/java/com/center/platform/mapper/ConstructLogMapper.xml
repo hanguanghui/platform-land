@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.center.platform.dao.IConstructLogDao" >
+  <resultMap id="BaseResultMap" type="ConstructLog" >
+    <result column="CONSTRUCTLOGID" property="constructlogid" jdbcType="VARCHAR" />
+    <result column="PROID" property="proid" jdbcType="VARCHAR" />
+    <result column="CREATETIME" property="createtime" jdbcType="DATE" javaType="java.sql.Date" />
+    <result column="DAY" property="day" jdbcType="VARCHAR" />
+    <result column="WEATHER" property="weather" jdbcType="VARCHAR" />
+    <result column="MORNING" property="morning" jdbcType="VARCHAR" />
+    <result column="AFTERNOON" property="afternoon" jdbcType="VARCHAR" />
+    <result column="NIGHT" property="night" jdbcType="VARCHAR" />
+    <result column="PRODUCEINFO" property="produceinfo" jdbcType="VARCHAR" />
+    <result column="SAFETYINFOMATION" property="safetyinfomation" jdbcType="VARCHAR" />
+    <result column="CHIEF" property="chief" jdbcType="VARCHAR" />
+    <result column="NOTETAKER" property="notetaker" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    CONSTRUCTLOGID, PROID, CREATETIME, DAY, WEATHER, MORNING, AFTERNOON, NIGHT, PRODUCEINFO, 
+    SAFETYINFOMATION, CHIEF, NOTETAKER
+  </sql>
+  <select id="find" resultMap="BaseResultMap" parameterType="SupervisionLog">
+    select
+    <include refid="Base_Column_List" />
+    from T_CONSTRUCT_LOG
+    where 1=1
+    <if test="constructlogid!= null">
+      and CONSTRUCTLOGID = #{constructlogid,jdbcType=VARCHAR}
+    </if>
+    <if test="proid!= null">
+      and PROID = #{proid,jdbcType=VARCHAR}
+    </if>
+    <if test="null!=conditions">
+      <foreach collection="conditions" item="condition" >
+        and ${condition}
+      </foreach>
+    </if>
+    ORDER BY createtime DESC
+  </select>
+
+  <delete id="delete" parameterType="Object">
+    delete from T_CONSTRUCT_LOG
+     where CONSTRUCTLOGID = #{constructlogid,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="save" parameterType="ConstructLog" >
+    insert into T_CONSTRUCT_LOG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="constructlogid != null" >
+        CONSTRUCTLOGID,
+      </if>
+      <if test="proid != null" >
+        PROID,
+      </if>
+      <if test="createtime != null" >
+        CREATETIME,
+      </if>
+      <if test="day != null" >
+        DAY,
+      </if>
+      <if test="weather != null" >
+        WEATHER,
+      </if>
+      <if test="morning != null" >
+        MORNING,
+      </if>
+      <if test="afternoon != null" >
+        AFTERNOON,
+      </if>
+      <if test="night != null" >
+        NIGHT,
+      </if>
+      <if test="produceinfo != null" >
+        PRODUCEINFO,
+      </if>
+      <if test="safetyinfomation != null" >
+        SAFETYINFOMATION,
+      </if>
+      <if test="chief != null" >
+        CHIEF,
+      </if>
+      <if test="notetaker != null" >
+        NOTETAKER
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="constructlogid != null" >
+        #{constructlogid,jdbcType=VARCHAR},
+      </if>
+      <if test="proid != null" >
+        #{proid,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=DATE},
+      </if>
+      <if test="day != null" >
+        #{day,jdbcType=VARCHAR},
+      </if>
+      <if test="weather != null" >
+        #{weather,jdbcType=VARCHAR},
+      </if>
+      <if test="morning != null" >
+        #{morning,jdbcType=VARCHAR},
+      </if>
+      <if test="afternoon != null" >
+        #{afternoon,jdbcType=VARCHAR},
+      </if>
+      <if test="night != null" >
+        #{night,jdbcType=VARCHAR},
+      </if>
+      <if test="produceinfo != null" >
+        #{produceinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="safetyinfomation != null" >
+        #{safetyinfomation,jdbcType=VARCHAR},
+      </if>
+      <if test="chief != null" >
+        #{chief,jdbcType=VARCHAR},
+      </if>
+      <if test="notetaker != null" >
+        #{notetaker,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </insert>
+</mapper>

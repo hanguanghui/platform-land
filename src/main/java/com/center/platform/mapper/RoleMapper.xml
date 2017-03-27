@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.center.platform.dao.IRoleDao" >
+  <resultMap id="BaseResultMap" type="com.center.platform.entity.Role" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="ROLENAME" property="rolename" jdbcType="VARCHAR" />
+    <result column="ROLECODE" property="rolecode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, ROLENAME, ROLECODE
+  </sql>
+  <select id="find" parameterType="Role" resultMap="BaseResultMap">
+    <if test="null!= rolecode">
+      <bind name="role" value="'%' + _parameter.rolecode + '%'" />
+    </if>
+    SELECT  * from t_role where 1=1
+    <if test="null != id">
+      and id = #{id,jdbcType = VARCHAR}
+    </if>
+    <if test="null != rolename">
+      and rolename = #{rolename,jdbcType = VARCHAR}
+    </if>
+    <if test="null != rolecode">
+      and rolecode LIKE #{role}
+    </if>
+  </select>
+
+  <insert id="save" parameterType="Role" useGeneratedKeys="true" keyProperty="id">
+    insert into t_role(id,rolename,rolecode)
+    values(#{id,jdbcType = VARCHAR},#{rolename,jdbcType = VARCHAR},#{rolecode,jdbcType = VARCHAR})
+  </insert>
+
+  <update id="update" parameterType="User" >
+    update t_role set rolename=#{rolename,jdbcType = VARCHAR},rolecode=#{rolecode,jdbcType = VARCHAR} where id=#{id,jdbcType = VARCHAR}
+  </update>
+
+  <delete id="delete" parameterType="String">
+    delete from t_role where id=#{id,jdbcType = VARCHAR}
+  </delete>
+</mapper>

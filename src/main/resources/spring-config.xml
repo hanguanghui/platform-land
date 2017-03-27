@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       	http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/data/jpa
+		http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+		http://www.springframework.org/schema/util
+		http://www.springframework.org/schema/util/spring-util.xsd
+		http://www.springframework.org/schema/cache
+		http://www.springframework.org/schema/cache/spring-cache.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+    <cache:annotation-driven cache-manager="cacheManager"/>
+
+    <bean id="ehcacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+        <property name="configLocation" value="classpath:ehcache.xml"/>
+    </bean>
+
+    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
+        <property name="cacheManager" ref="ehcacheManager"/>
+        <property name="transactionAware" value="true"/>
+    </bean>
+
+    <!--注入文件存储相关参数-->
+    <bean id="fileService" class="com.center.platform.service.impl.FileServiceImpl">
+        <property name="localLocation" value="${filestore.path}"/>
+        <property name="pdfLocation" value="${filestroe.pdfpath}"/>
+        <!--open office params-->
+        <property name="host" value="${openoffice.hots}"/>
+        <property name="port" value="${openoffice.port}"/>
+        <property name="openOfficeHome" value="${openoffice.home}"/>
+        <property name="fileSize" value="${file.size}"/>
+    </bean>
+
+    <bean id="logService" class="com.center.platform.service.impl.LogServiceImpl">
+        <property name="logPath" value="${filestore.logpath}"/>
+    </bean>
+
+    <bean id="mapService" class="com.center.platform.service.impl.MapServiceInpl">
+        <property name="tempLocation" value="${filestore.temppath}"/>
+        <property name="parseShapeInterface" value="${parseShapeInterface}"/>
+        <property name="serverUrl" value="${server.url}"/>
+    </bean>
+
+</beans>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.center.platform.dao.IRelationDao">
+    <resultMap id="BaseResultMap" type="com.center.platform.entity.Relation">
+        <id column="RELATIONID" property="relationId" jdbcType="VARCHAR"/>
+        <result column="RELATIONPARENTID" property="relationParentId" jdbcType="VARCHAR"/>
+        <result column="PROJECTID" property="projectId" jdbcType="VARCHAR"/>
+        <result column="CREATETIME" property="createtime" jdbcType="DATE" javaType="java.sql.Date"/>
+        <result column="LIMITTIME" property="limittime" jdbcType="VARCHAR"/>
+        <result column="STATE" property="state" jdbcType="VARCHAR"/>
+        <result column="OPNION" property="opnion" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    RELATIONID, RELATIONPARENTID, CREATETIME, LIMITTIME,PROJECTID,STATE
+  </sql>
+    <select id="find" resultMap="BaseResultMap" parameterType="Relation">
+        select
+        <include refid="Base_Column_List"/>
+        from T_RELATION
+        where 1=1
+        <if test="null != projectId">
+            and PROJECTID=#{projectId,jdbcType = VARCHAR}
+        </if>
+        <if test="null != state">
+            and STATE=#{state,jdbcType=VARCHAR}
+        </if>
+        <if test="null != relationParentId">
+            and RELATIONPARENTID=#{relationParentId,jdbcType=VARCHAR}
+        </if>
+        <if test="null!=conditions">
+            <foreach collection="conditions" item="condition" >
+                and ${condition}
+            </foreach>
+        </if>
+    </select>
+
+    <select id="findByCompany" resultMap="BaseResultMap" parameterType="Relation">
+        select
+        <include refid="Base_Column_List"/>
+        from T_RELATION
+        where 1=1
+        <if test="null != projectId">
+            and PROJECTID=#{projectId,jdbcType = VARCHAR}
+        </if>
+        <if test="null!=conditions">
+            <foreach collection="conditions" item="condition" >
+                and ${condition}
+            </foreach>
+        </if>
+        AND RELATIONPARENTID in (
+        select companyid from t_company
+        )
+    </select>
+
+
+    <delete id="delete" parameterType="String">
+    delete from T_RELATION
+    where RELATIONID = #{relationId,jdbcType=VARCHAR}
+  </delete>
+    <insert id="save" parameterType="Relation">
+        insert into T_RELATION
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="relationId != null">
+                RELATIONID,
+            </if>
+            <if test="relationParentId != null">
+                RELATIONPARENTID,
+            </if>
+            <if test="projectId != null">
+                PROJECTID,
+            </if>
+            <if test="createtime != null">
+                CREATETIME,
+            </if>
+            <if test="limittime != null">
+                LIMITTIME,
+            </if>
+            <if test="state != null">
+                STATE
+            </if>
+            <if test="opnion != null">
+                OPNION
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="relationId != null">
+                #{relationId,jdbcType=VARCHAR},
+            </if>
+            <if test="relationParentId != null">
+                #{relationParentId,jdbcType=VARCHAR},
+            </if>
+            <if test="projectId != null">
+                #{projectId,jdbcType=VARCHAR},
+            </if>
+            <if test="createtime != null">
+                #{createtime,jdbcType=DATE},
+            </if>
+            <if test="limittime != null">
+                #{limittime,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=VARCHAR},
+            </if>
+            <if test="opnion != null">
+                #{opnion,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="update" parameterType="Relation">
+        update T_RELATION
+        <set>
+            <if test="relationParentId != null">
+                RELATIONPARENTID = #{relationParentId,jdbcType=VARCHAR},
+            </if>
+            <if test="projectId != null">
+                PROJECTID = #{projectId,jdbcType=VARCHAR},
+            </if>
+            <if test="createtime != null">
+                CREATETIME = #{createtime,jdbcType=DATE},
+            </if>
+            <if test="limittime != null">
+                LIMITTIME = #{limittime,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                STATE = #{state,jdbcType=VARCHAR},
+            </if>
+            <if test="opnion != null">
+                OPNION = #{opnion,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where RELATIONID = #{relationId,jdbcType=VARCHAR}
+    </update>
+</mapper>

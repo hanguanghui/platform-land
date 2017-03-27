@@ -1,0 +1,77 @@
+.upload-area {
+
+}
+
+.material-area {
+    min-height: 470px;
+}
+
+.layui-form-select dl {
+
+}
+
+.time-select {
+    width: 440px;
+    margin: 0 auto;
+}
+
+.photo {
+    margin: 10px 0;
+}
+
+.list-inline {
+    display: inline;
+}
+
+.list-inline li {
+    display: inline-block;
+    padding: 0 5px 10px 5px;
+}
+
+.history-img-content {
+    margin-top: 20px;
+    position: relative;
+}
+
+.history-img-content .buttonInfo {
+    display: block;
+    width: 100%;
+    height: 25px;
+    background-color: black;
+    filter: alpha(opacity=40);
+    -moz-opacity: 0.4;
+    opacity: 0.6;
+    position: absolute;
+    top: 95px;
+    left: 0px;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    line-height: 25px;
+    z-index: 10;
+}
+
+.auto-play {
+    float: left;
+    width: 30px;
+    margin-right: 10px;
+    margin-top: 4px;
+}
+
+.hidden {
+    display: none;
+}
+
+.construct-title {
+    width: 100px;
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0 auto;
+    height: 50px;
+    line-height: 50px;
+}
+
+.construct-day-info {
+    float: right;
+    margin: 0 80px 20px 0px;
+}

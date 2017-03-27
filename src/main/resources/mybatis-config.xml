@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <typeAliases>
+        <typeAlias type="com.center.platform.entity.User" alias="User"/>
+        <typeAlias type="com.center.platform.entity.Assignment" alias="Assignment"/>
+        <typeAlias type="com.center.platform.entity.Company" alias="Company"/>
+        <typeAlias type="com.center.platform.entity.Expert" alias="Expert"/>
+        <typeAlias type="com.center.platform.entity.Material" alias="Material"/>
+        <typeAlias type="com.center.platform.entity.Hproject" alias="Hproject"/>
+        <typeAlias type="com.center.platform.entity.Menu" alias="Menu"/>
+        <typeAlias type="com.center.platform.entity.Relation" alias="Relation"/>
+        <typeAlias type="com.center.platform.entity.Role" alias="Role"/>
+        <typeAlias type="com.center.platform.entity.Log" alias="Log"/>
+        <typeAlias type="com.center.platform.entity.Supervision" alias="Supervision"/>
+        <typeAlias type="com.center.platform.entity.SupervisionLog" alias="SupervisionLog"/>
+        <typeAlias type="com.center.platform.entity.ConstructLog" alias="ConstructLog"/>
+    </typeAliases>
+</configuration>

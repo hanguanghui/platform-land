@@ -1,0 +1,199 @@
+* {
+    margin: 0;
+    list-style: none;
+}
+
+html, body {
+    font-family: "Microsoft YaHei", "Hiragino Sans GB", sans-serif, "ff-tisa-web-pro-1", "ff-tisa-web-pro-2", "Lucida Grande", "Hiragino Sans GB", "Hiragino Sans GB W3";
+    font-weight: normal;
+    height: 100%;
+    width: 100%;
+    margin: 0px;
+    min-height: 100%;
+    min-width: 990px;
+    overflow: hidden;
+    *overflow-y: hidden;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+a:active {
+    text-decoration: none;
+}
+
+.header {
+    width: 1000px;
+    height: 74px;
+    position: relative;
+    margin: 0 auto;
+    z-index: 2;
+    overflow: hidden;
+}
+
+.headerLogo {
+    margin: 0px 0 0 50px;
+    height: 74px;
+    background: url("../image/logo.png") no-repeat;
+}
+
+.login-body {
+    top: 114px;
+    width: 100%;
+    background: #f3f3f3;
+}
+
+.theme {
+    position: relative;
+    width: 1000px;
+    height: 100%;
+    margin: 0 auto;
+    background-image: url("../image/promPic.png");
+    background-repeat: no-repeat;
+}
+
+.login {
+    width: 323px;
+    height: 350px;
+    padding: 13px 14px 15px;
+    top: 135px;
+    left: 50%;
+    margin-left: 115px;
+    text-align: left;
+    position: absolute;
+    z-index: 2;
+    background-image: url("../image/login_v5.png");
+}
+
+.loginFunc {
+    width: 100%;
+    height: 47px;
+    overflow: hidden;
+    clear: both;
+}
+
+.loginFuncNormal {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    line-height: 46px;
+    float: left;
+    font-size: 14px;
+    text-align: center;
+    color: #626262;
+    cursor: pointer;
+}
+
+.form-body {
+    margin: 50px 5%;
+    width: 90%;
+    overflow: hidden;
+    clear: both;
+}
+
+.input-box {
+    position: absolute;
+    right: 25px;
+    width: 80%;
+    height: 42px;
+    line-height: 42px;
+    background: url("../image/input.png") no-repeat;
+    border: none;
+}
+
+.u-logo {
+    width: auto;
+    padding: 0 7px 0 9px;
+    float: left;
+    width: 28px;
+    text-align: center;
+    padding: 0 5px 0 10px;
+    height: 100%;
+}
+
+.i-logo {
+    font-size: 18px;
+    line-height: 42px;
+    float: left;
+}
+
+.u-input {
+    width: 220px;
+    height: 100%;
+    float: left;
+}
+
+.u-text-input {
+    margin: 1px;
+    width: 98%;
+    height: 95%;
+    font-size: 14px;
+    border: none;
+}
+
+.margin-clear {
+    margin-top: 84px;
+}
+
+.role-check{
+    margin-top: 168px;
+    position: absolute;
+    right: 25px;
+    width: 80%;
+    height: 42px;
+    line-height: 42px;
+    border: none;
+}
+
+.submit-button {
+    margin-top: 170px;
+    height: 42px;
+    width: 100%;
+}
+
+.btn-c {
+    width: 110px;
+    height: 40px;
+    display: inline-block;
+    margin: 0 10px 0 10px;
+    border: none;
+    font-size: 16px;
+    font-weight: 700;
+}
+.btn-color{
+    color: #ffffff;
+}
+
+.btn-submit{
+    background:url("../image/btn_b.png");
+    background-repeat:no-repeat;
+}
+.btn-cancel{
+    background: url("../image/btn_w.png");
+    background-repeat:no-repeat;
+}
+
+.footer {
+    width: 1000px;
+    text-align: center;
+    height: 65px;
+    margin: 0 auto;
+}
+
+.footer span {
+    font-size: 14px;
+}
