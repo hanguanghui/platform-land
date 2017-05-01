@@ -22,11 +22,31 @@
         <gt.version>9.3</gt.version>
         <lucene.version>4.4.0</lucene.version>
         <poi.version>3.9</poi.version>
+        <org.spring.security-version>3.2.4.RELEASE</org.spring.security-version>
     </properties>
 
 
     <dependencies>
-
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${org.spring.security-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>${org.spring.security-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${org.spring.security-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-acl</artifactId>
+            <version>${org.spring.security-version}</version>
+        </dependency>
 
         <dependency>
             <groupId>org.codehaus.xfire</groupId>

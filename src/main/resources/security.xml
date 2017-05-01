@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:beans="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <security:http pattern="/user/index" security="none"/>
+    <security:http pattern="/" security="none"/>
+    <security:http pattern="/denied.jsp" security="none"/>
+    <security:http pattern="/**/*.css" security="none"/>
+    <security:http pattern="/**/*.js" security="none"/>
+    <security:http pattern="/**/*.jpg" security="none"/>
+    <security:http pattern="/**/*.png" security="none"/>
+    <security:http pattern="/**/*.gif" security="none"/>
+    <security:http use-expressions="true" auto-config="false" entry-point-ref="myAuthenticationEntryPoint" access-denied-page="/denied.jsp">
+
+
+        <security:intercept-url pattern="/**" access="isAuthenticated()" />
+        <!--<security:intercept-url pattern="/"-->
+        <security:logout logout-url="/logOut" logout-success-url="/" invalidate-session="true"/>
+        <!-- 所有地址全开，无需验证 -->
+         <!--<security:intercept-url pattern="/**" access="permitAll" />-->
+        <security:custom-filter ref="mySecurityFilter" before="FILTER_SECURITY_INTERCEPTOR"/>
+    </security:http>
+    <!-- 未登录的切入点 -->
+    <bean id="myAuthenticationEntryPoint" class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+        <property name="loginFormUrl" value="/"></property>
+    </bean>
+
+    <security:authentication-manager alias="myAuthenticationManager">
+        <security:authentication-provider user-service-ref="myUserDetailServiceImpl" />
+    </security:authentication-manager>
+</beans>

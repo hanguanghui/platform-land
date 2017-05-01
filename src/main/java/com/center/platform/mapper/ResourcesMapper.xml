@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.center.platform.dao.ResourcesDao">
+    <resultMap id="menu" type="com.center.platform.entity.Resources">
+        <id property="id" column="id"/>
+        <result property="name" column="menuname"/>
+        <result property="resUrl" column="responseurl"/>
+        <result column="parentid" property="parentId"></result>
+    </resultMap>
+    <select id="queryAll" resultMap="menu" parameterType="com.center.platform.entity.Resources">
+       select * from t_menu where parentid != '0'
+    </select>
+
+    <!-- 根据账号Id获取该用户的权限-->
+    <select id="findAccountResourcess" parameterType="String" resultMap="menu">
+       select * from t_menu t4 join (select t3.menu_id as id from
+      (select t2.role_id as id from t_user t1 join t_user_role t2 on t1.id=t2.user_id where t1.name=#{name})p1
+      join t_role_menu t3 on t3.role_id=p1.id)p2 on t4.id=p2.id
+    </select>
+</mapper>
