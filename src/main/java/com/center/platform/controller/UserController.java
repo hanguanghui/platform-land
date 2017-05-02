@@ -6,6 +6,11 @@ import com.center.platform.service.IRoleService;
 import com.center.platform.service.IUserService;
 import com.center.platform.utils.EnumUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +32,8 @@ public class UserController extends BaseController {
     private IUserService userService;
     @Autowired
     private IRoleService roleService;
+    @Autowired
+    private AuthenticationManager myAuthenticationManager;
 
     @RequestMapping("/index")
     public String login(HttpServletRequest request,
@@ -45,6 +52,7 @@ public class UserController extends BaseController {
             }
         }
         if (isNotNull(loginUser)) {
+            authenticationUser(loginUser,request);
             session.setAttribute("user", loginUser);
             List<Menu> lst = userService.getMenuLst(loginUser);
             model.addAttribute("menuResult", lst);
@@ -77,6 +85,19 @@ public class UserController extends BaseController {
     @ResponseBody
     public Object roleInfo(){
         return roleService.find();
+    }
+
+    /**
+     * 将用户信息放入spring security中
+     * @param user
+     */
+    private void authenticationUser(User user,HttpServletRequest request){
+        Authentication authentication = myAuthenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(user.getName(),user.getPassword()));
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        securityContext.setAuthentication(authentication);
+        HttpSession session = request.getSession(true);
+        session.setAttribute("SPRING_SECURITY_CONTEXT", securityContext);
     }
 
 }

@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: de.innosystec:java-unrar:java-unrar:0.3">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/de/innosystec/java-unrar/0.3/java-unrar-0.3-java-unrar.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/de/innosystec/java-unrar/0.3/java-unrar-0.3-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/de/innosystec/java-unrar/0.3/java-unrar-0.3-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

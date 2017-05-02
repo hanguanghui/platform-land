@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.center.platform.dao.AccountDao">
+    <resultMap id="account" type="com.center.platform.entity.Account">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="password" property="password"/>
+        <result column="state" property="state"/>
+    </resultMap>
+    <!-- 验证用户登陆 -->
+    <select id="countAccount" parameterType="com.center.platform.entity.Account" resultMap="account">
+        select
+        id,name,password,state
+        from t_user where
+       name=#{name} and password=#{password}
+    </select>
+    <select id="querySingleAccount" parameterType="String"
+            resultMap="account">
+        select
+        id,name,password,state
+        from t_user where name=#{name}
+    </select>
+</mapper>
